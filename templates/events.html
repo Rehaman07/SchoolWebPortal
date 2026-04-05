@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Events & Activities - Little Steps{% endblock %}
+
+{% block content %}
+<section class="section bg-sage" style="padding-top: 100px;">
+    <div class="container text-center text-white">
+        <h2 class="section-title text-white">Events & Activities Calendar</h2>
+        <p>Stay updated with our upcoming school events and activities.</p>
+    </div>
+</section>
+
+<section class="section bg-light">
+    <div class="container">
+        <h3 class="mb-4">Upcoming Events</h3>
+        <div class="programs-grid">
+            {% for event in upcoming_events %}
+            <div class="feature-box glass-panel">
+                <h4 style="color: var(--mustard);">{{ event.date|date:"F j, Y" }}</h4>
+                <h3>{{ event.title }}</h3>
+                {% if event.time %}
+                <p><strong>Time:</strong> {{ event.time|time:"g:i A" }}</p>
+                {% endif %}
+                <p>{{ event.description }}</p>
+                {% if event.image %}
+                <img src="{{ event.image.url }}" style="width: 100%; border-radius: 10px; margin-top: 10px;" alt="{{ event.title }}">
+                {% endif %}
+            </div>
+            {% empty %}
+            <p>No upcoming events currently scheduled.</p>
+            {% endfor %}
+        </div>
+
+        <h3 class="mt-5 mb-4" style="margin-top: 50px;">Past Events</h3>
+        <div class="programs-grid">
+            {% for event in past_events %}
+            <div class="feature-box glass-panel" style="opacity: 0.8;">
+                <h4 style="color: var(--sage-green);">{{ event.date|date:"F j, Y" }}</h4>
+                <h3>{{ event.title }}</h3>
+                <p>{{ event.description }}</p>
+            </div>
+            {% empty %}
+            <p>No past events to show.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Photo Gallery - Little Steps{% endblock %}
+
+{% block content %}
+<section class="section bg-light" style="padding-top: 100px;">
+    <div class="container">
+        <div class="section-header center">
+            <span class="section-badge">Gallery</span>
+            <h2 class="section-title">Our Happy Moments</h2>
+            <p class="section-desc">Explore the joyful activities and events at Little Steps.</p>
+        </div>
+
+        {% for category in categories %}
+        <div style="margin-bottom: 40px;">
+            <h3>{{ category.name }}</h3>
+            <div class="programs-grid" style="grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));">
+                {% for image in category.images.all %}
+                <div class="glass-card image-card">
+                    <img src="{{ image.image.url }}" alt="{{ image.caption }}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px;">
+                    {% if image.caption %}
+                    <p style="text-align: center; padding: 10px; margin: 0;">{{ image.caption }}</p>
+                    {% endif %}
+                </div>
+                {% empty %}
+                <p>No images in this category yet.</p>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
